@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>To watch list</title>
+  <meta name="theme-color" content="#fbfcfe">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="To watch">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="watch-app" aria-label="Movie watch list">
+      <div id="toast" class="toast" aria-live="polite">
+        <div class="toast-content"><span id="toast-message"></span><button id="undo-action" class="undo-action" type="button" hidden>Undo</button></div>
+      </div>
+
+      <!-- Sign in -->
+      <div id="login-view" class="login-view" hidden>
+        <h1 class="app-title">To watch list</h1>
+        <p class="muted">Enter your password to open your list.</p>
+        <form id="login-form" class="login-form">
+          <input id="login-password" class="form-input" type="password" autocomplete="current-password" placeholder="Password" required>
+          <button class="form-action primary-action" type="submit">Sign in</button>
+        </form>
+      </div>
+
+      <!-- List -->
+      <div id="list-view" hidden>
+        <header class="app-header">
+          <div class="header-row">
+            <h1 class="app-title">To watch list</h1>
+            <button id="profile-button" class="icon-button" type="button" aria-label="Settings">
+              <svg viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </button>
+          </div>
+          <nav class="tabs" aria-label="Movie list filters" role="tablist">
+            <button class="tab-button active" type="button" role="tab" data-tab="to-watch" aria-selected="true">To watch <span class="tab-count" id="count-to-watch"></span></button>
+            <button class="tab-button" type="button" role="tab" data-tab="watched" aria-selected="false">Watched <span class="tab-count" id="count-watched"></span></button>
+          </nav>
+        </header>
+
+        <section aria-live="polite">
+          <div id="movie-list" class="movie-list"></div>
+          <div id="empty-state" class="empty-state" hidden></div>
+        </section>
+
+        <div class="add-zone">
+          <button class="add-button" type="button" id="open-add-button">
+            <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            <span>Add</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Bottom sheet used for: add/search, shared post results, manual form, settings -->
+      <div id="sheet-overlay" class="form-overlay" aria-hidden="true">
+        <div id="sheet" class="movie-form" role="dialog" aria-modal="true" aria-labelledby="sheet-title"></div>
+      </div>
+
+      <template id="movie-row-template">
+        <article class="movie-row">
+          <div class="movie-summary">
+            <input class="movie-checkbox" type="checkbox" aria-label="Mark as watched">
+            <div class="movie-text">
+              <p class="movie-title"></p>
+              <p class="movie-meta"></p>
+            </div>
+            <button class="expand-button" type="button" aria-expanded="false" aria-label="Show details">
+              <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+          </div>
+          <div class="movie-details">
+            <img class="movie-thumbnail" alt="" loading="lazy">
+            <div class="detail-body">
+              <span class="detail-label">Genre</span>
+              <p class="detail-value detail-genre"></p>
+              <span class="detail-label">Runtime</span>
+              <p class="detail-value detail-runtime"></p>
+              <span class="detail-label">Notes</span>
+              <p class="detail-value detail-notes"></p>
+              <div class="detail-actions">
+                <a class="detail-link detail-source" target="_blank" rel="noopener" hidden></a>
+                <button class="detail-link detail-edit" type="button">Edit</button>
+                <button class="detail-link detail-delete" type="button">Remove</button>
+              </div>
+            </div>
+          </div>
+        </article>
+      </template>
+    </section>
+  </main>
+  <script src="/app.js" type="module"></script>
+</body>
+</html>

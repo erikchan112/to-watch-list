@@ -1,0 +1,27 @@
+# Render Blueprint: New → Blueprint → pick this repo.
+# The list is a JSON file, so it needs a persistent disk. Disks need a paid instance
+# (Starter). On the free plan the file is wiped on every deploy or restart.
+services:
+  - type: web
+    name: to-watch-list
+    runtime: node
+    plan: starter
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /health
+    autoDeploy: true
+    disk:
+      name: data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: DATA_FILE
+        value: /var/data/watchlist.json
+      - key: APP_PASSWORD
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: TMDB_API_KEY
+        sync: false
